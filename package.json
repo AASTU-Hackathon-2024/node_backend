@@ -1,0 +1,24 @@
+{
+  "name": "node_backend",
+  "version": "1.0.0",
+  "description": "ecommerce node backend ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AASTU-Hackathon-2024/node_backend.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "node",
+    "backednd"
+  ],
+  "author": "@yonna_hill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AASTU-Hackathon-2024/node_backend/issues"
+  },
+  "homepage": "https://github.com/AASTU-Hackathon-2024/node_backend#readme"
+}
