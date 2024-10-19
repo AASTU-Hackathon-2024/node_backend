@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/AASTU-Hackathon-2024/node_backend/issues"
   },
-  "homepage": "https://github.com/AASTU-Hackathon-2024/node_backend#readme"
+  "homepage": "https://github.com/AASTU-Hackathon-2024/node_backend#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
