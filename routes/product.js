@@ -1,9 +1,13 @@
 const express = require("express");
-const { postProduct, getProducts} = require("../controllers/user");
-const { signIn } = require("../controllers/auth");
+const { getProducts, postProduct } = require("../controllers/product");
+const multer = require("multer");
+
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage });
 
 const router = express.Router();
 
-router.get("/signin", signIn);
+router.get("/list", getProducts);
+router.post("/upload", upload.single("image"), postProduct);
 
 module.exports = router;

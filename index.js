@@ -9,6 +9,7 @@ const app = express();
 
 const user = require("./routes/user");
 const auth = require("./routes/auth");
+const products = require("./routes/product");
 
 app.get("/", (req, res) => {
   res.send("Welcome to the AASTU-Hackathon Ecommerce platform!");
@@ -19,7 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/user", user);
-app.use("auth", auth);
+app.use("/auth", auth);
+app.use("/products", products);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);

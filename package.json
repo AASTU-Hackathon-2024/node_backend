@@ -30,8 +30,12 @@
     "@prisma/client": "^5.21.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
+    "cloudinary": "^2.5.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "multer": "^1.4.5-lts.1",
+    "multipart": "^0.1.5",
+    "node-fetch": "^2.7.0",
     "prisma": "^5.21.1",
     "short-unique-id": "^5.2.0"
   }

@@ -18,6 +18,7 @@ model User {
 
   carts     Cart[]
   wishlists WishList[]
+  orders Order[]
 }
 
 model Product{
@@ -53,6 +54,21 @@ model WishList{
 
   user      User    @relation(fields: [userId], references: [userId])
   product   Product @relation(fields: [productId], references: [productId])
+}
+
+model Kyc{
+  id Int @id @default(autoincrement())
+
+}
+
+model Order {
+  id            Int        @id @default(autoincrement())
+  userId        String        // Reference to the User who placed the order
+  totalAmount   Float      // Total amount for the order
+  status        String     @default("pending") // Order status
+  createdAt     DateTime   @default(now()) // Timestamp when the order was created
+  updatedAt     DateTime   @updatedAt // Timestamp when the order was last updated
+  user          User       @relation(fields: [userId], references: [userId]) // Relationship to User
 }
 
 enum UserRole{
