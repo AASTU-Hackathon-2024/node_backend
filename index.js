@@ -1,21 +1,23 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
-const env = require("dotenv");
+import express from "express";
+import bodyParser from "body-parser";
+import { config } from "dotenv";
+import cors from "cors";
 
-env.config();
+import user from "./routes/user.js";
+import products from "./routes/product.js";
+import auth from "./routes/auth.js";
+
+
+config();
 const port = process.env.PORT || 8000;
 const app = express();
-
-const user = require("./routes/user");
-const auth = require("./routes/auth");
-const products = require("./routes/product");
 
 app.get("/", (req, res) => {
   res.send("Welcome to the AASTU-Hackathon Ecommerce platform!");
   console.log(req);
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

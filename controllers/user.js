@@ -1,12 +1,12 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-const ShortUniqueId = require("short-unique-id");
-const uid = new ShortUniqueId();
+import { PrismaClient } from "@prisma/client";
+import ShortUniqueId from "short-unique-id";
 
-const { hashPassword } = require("../utils/password");
+import { hashPassword } from "../utils/password.js";
+
+const uid = new ShortUniqueId();
+const prisma = new PrismaClient();
 
 const createUser = async (req, res) => {
-  console.log(req.body);
   const { email, password, role } = req.body;
 
   if (!email || !password) {
@@ -49,4 +49,4 @@ const getUsers = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUsers };
+export { createUser, getUsers };

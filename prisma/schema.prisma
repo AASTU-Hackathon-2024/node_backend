@@ -27,16 +27,29 @@ model Product{
   title       String 
   category    String
   description String
-  imgUrl      String @map("img_url")
 
   carts Cart[]
   wishlists WishList[]
+  stock Stock?
+  variations Variation[]
+}
+
+model Variation {
+  id          Int      @id @default(autoincrement())
+  productId   Int      // Reference to the base product
+  color       String   // Color of the variation
+  size        String?  // Optional attribute
+  price       Float    // Price can vary by variation
+  stock       Int      // Stock for this specific variation
+  imgUrl      String   @map("img_url")
+
+  product     Product  @relation(fields: [productId], references: [id]) // Relationship to Product
 }
 
 model Cart {
   id        Int     @id @default(autoincrement())
   userId    String @map("user_id")
-  productId String @map("product_id")
+  productId String @unique @map("product_id")
   quantity  Int
   addedAt   DateTime @default(now()) @map("added_at")
 
@@ -68,7 +81,19 @@ model Order {
   status        String     @default("pending") // Order status
   createdAt     DateTime   @default(now()) // Timestamp when the order was created
   updatedAt     DateTime   @updatedAt // Timestamp when the order was last updated
+  address       String     
+  zipcode       String?
+  city          String
+  phone         String
   user          User       @relation(fields: [userId], references: [userId]) // Relationship to User
+}
+
+model Stock{
+  id           Int        @id @default(autoincrement())
+  productId    String     @unique @map("product_id")
+  quantity     Int  
+  threshold    Int        @default(5)
+  product      Product    @relation(fields: [productId],references: [productId])
 }
 
 enum UserRole{

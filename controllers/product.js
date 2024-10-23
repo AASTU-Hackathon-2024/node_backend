@@ -1,23 +1,18 @@
-const { PrismaClient } = require("@prisma/client");
-const ShortUniqueId = require("short-unique-id");
-const fetch = require("node-fetch");
-const env = require("dotenv");
-const cloudinary = require("cloudinary").v2;
+import { PrismaClient } from "@prisma/client";
+import ShortUniqueId from "short-unique-id";
+import path from "path";
+import multer from "multer";
+import { config } from "dotenv";
 
-cloudinary.config({
-  cloud_name: "dkh2qfffj",
-  api_key: "169594764447942",
-  api_secret: "D4C874dZqPSPaAurvNE_YCAPtwM",
-});
-
+config();
 const prisma = new PrismaClient();
 const uid = new ShortUniqueId();
 
-env.config();
-
 const getProducts = async (req, res) => {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      include: { variations: true },
+    });
     console.log(products);
 
     res.status(200).json(products);
@@ -29,33 +24,17 @@ const getProducts = async (req, res) => {
 
 const postProduct = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
+    // const { product, variation } = req.body;
+    // const { title, price, description, category } = product;
+    // variation.map(variant=>)
+    const productId = uid.rnd(10);
+    res.status(200).json({ message: "succesful" });
 
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload_stream(
-      { resource_type: "image" },
-      (error, result) => {
-        if (error) {
-          return res
-            .status(500)
-            .json({ message: "Error uploading to Cloudinary", error });
-        }
-        res.json({
-          message: "Image uploaded successfully!",
-          url: result.secure_url,
-        });
-      }
-    );
-
-    // Create a stream to upload the file
-    const stream = cloudinary.uploader.upload_stream(result);
-    stream.end(req.file.buffer); // End the stream with the file buffer
+    // Create the uploads directory if it doesn't exist
   } catch (error) {
     console.error("Error uploading product", error);
     res.status(500).json({ message: "failed to upload product", error });
   }
 };
 
-module.exports = { getProducts, postProduct };
+export { getProducts, postProduct };

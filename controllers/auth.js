@@ -1,4 +1,4 @@
-const { verifyPassword } = require("../utils/password");
+import { verifyPassword } from "../utils/password.js";
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
@@ -27,4 +27,4 @@ const signIn = async (req, res) => {
   }
 };
 
-module.exports = { signIn };
+export {signIn}
