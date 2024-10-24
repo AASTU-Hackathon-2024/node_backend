@@ -41,7 +41,7 @@ model Variation {
   size        String?  // Optional attribute
   price       Float    // Price can vary by variation
   stock       Int      // Stock for this specific variation
-  imgUrl      String   @map("img_url")
+  imgUrl      Json   @map("img_url")
 
   product     Product  @relation(fields: [productId], references: [id]) // Relationship to Product
 }
