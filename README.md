@@ -2,11 +2,12 @@
 ## Overview
 This API provides endpoints for managing users, products, orders, in the e-commerce application.
 ## Getting Started
-Make sure to clone this repo or download the zip file and extract it in your preffered destination. 
-and run the following commands in the directory:
+Make sure to clone this repo or download the zip file and extract it in your preffered destination. Navigate to the directory: 
+#### Installing Dependencies
 ```bash
 npm install
 ```
+#### Start the application 
 ```bash
 npm run server
 ```
