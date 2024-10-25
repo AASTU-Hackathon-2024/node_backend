@@ -14,17 +14,15 @@ https://localhost:8000
       - **Code**: 200 OK
       - **Content**:
         ```json
-  {
-    "id": 1,
-    "userId": "hijaka32",
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "password": "10Q#1212jkl21h3jk2;jk3h2;1jk3hjk12b;3jk;21h3jk2b;kej;b1k2h3j2kb3nk12", // bcrypted
-    "createdAt": "2023-10-01T12:34:56Z",
-    "updatedAt": "2023-10-10T12:34:56Z",
-    "carts": [],
-    "wishlists": []
-  }
+        {
+        "id":1,
+        "userId":"hij21k31",
+        "name":"@yonna",
+        "email":"yonas@example.com",
+        //...
+        "carts":[],
+        "wishlists":[]
+        }
   
   
 
