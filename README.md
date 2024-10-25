@@ -125,7 +125,6 @@ https://localhost:8000
            "message":"Failed to delete user",
            "error":"actual error message"
           }
-          }
 ### Products
 - GET /products/list
   - Fetches all product data including relational datas variation.
@@ -149,7 +148,7 @@ https://localhost:8000
           {
            "message": "Failed to fetch products",
            "error": "actual error message"
-        }
+          }
 - POST /products/upload
   - Uploads  a product to the product model
   - Request body
