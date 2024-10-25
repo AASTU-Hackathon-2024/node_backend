@@ -1,6 +1,15 @@
 # API-Documentation
 ## Overview
 This API provides endpoints for managing users, products, orders, in the e-commerce application.
+## Getting Started
+Make sure to clone this repo or download the zip file and extract it in your preffered destination. 
+and run the following commands in the directory:
+```bash
+npm install
+```
+```bash
+npm run server
+```
 ### Authentication 
 >[!IMPORTANT]
 >There is currently no authentication for this service so there is no need for Authorization although we will consider jwt for later.
