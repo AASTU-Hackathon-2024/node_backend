@@ -8,8 +8,8 @@ This API provides endpoints for managing users, products, orders, in the e-comme
 https://localhost:8000
 ### Users
 - GET /user/list
-  - fetches all user data including relational datas such as cart wishilist
-  - returns:
+  - Fetches all user data including relational datas such as carts and wishlist.
+  - Returns:
     - Success Response
       - **Code**: 200 OK
       - **Content**:
@@ -23,6 +23,49 @@ https://localhost:8000
         "carts":[],
         "wishlists":[]
         }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Something went wrong",
+           "error":"actual error message"
+          }
+  - POST /user/signup
+  - Registers a user on our database
+  - Request body
+    - **Content**:
+        ```json
+        {
+          "role":"user/admin"//Optional
+          "email":"exom@example.com",
+          "password":"123456"
+        }
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message":"User succesfully registered.
+          "user":  {
+              "id":1,
+              "userId":"hij21k31",
+              "name":"@yonna",
+              "email":"yonas@example.com",
+              //...
+              "carts":[],
+              "wishlists":[]
+          }
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Something went wrong",
+           "error":"actual error message"
+          }
   
   
 
