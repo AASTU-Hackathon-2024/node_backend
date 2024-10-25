@@ -40,6 +40,7 @@ model Product {
 }
 
 model Variation {
+<<<<<<< HEAD
   id        Int    @id @default(autoincrement())
   productId String @map("product_id") // Reference to the base product
   color     String // Color of the variation
@@ -50,6 +51,17 @@ model Variation {
   wishlist WishList[]
   product  Product    @relation(fields: [productId], references: [productId], onDelete: Cascade) // Relationship to Product
   cart     Cart[]
+=======
+  id          Int      @id @default(autoincrement())
+  productId   Int      // Reference to the base product
+  color       String   // Color of the variation
+  size        String?  // Optional attribute
+  price       Float    // Price can vary by variation
+  stock       Int      // Stock for this specific variation
+  imgUrl      Json   @map("img_url")
+
+  product     Product  @relation(fields: [productId], references: [id]) // Relationship to Product
+>>>>>>> a0bfb585d1bc69a0d6bb0bf0c09eb1cee07eb7ff
 }
 
 model Cart {
