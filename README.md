@@ -132,14 +132,13 @@ https://localhost:8000
             "variations":
               [{
                 color,
-              sizes // array,
-              imgUrls// array,
-              stock
+                sizes,    // array,
+                imgUrls, // array,
+                stock
             },
               {},
               {}
             ] // Don't forget to stringify this 
-          "
         }
   - Returns:
     - Success Response
