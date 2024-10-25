@@ -40,7 +40,7 @@ https://localhost:8000
           {
            "message": "Something went wrong",
            "error": "actual error message"
-        }
+          }
 - POST /user/signup
 - Registers a user on our database
 - Request body
