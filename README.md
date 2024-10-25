@@ -40,16 +40,106 @@ https://localhost:8000
           {
            "message": "Something went wrong",
            "error": "actual error message"
-          }
-  - POST /user/signup
-  - Registers a user on our database
-  - Request body
+        }
+- POST /user/signup
+- Registers a user on our database
+- Request body
+  - **Content**:
+      ```json
+      {
+        "role": "user/admin"//Optional
+        "email": "exom@example.com",
+        "password": "123456"
+      }
+- Returns:
+  - Success Response
+    - **Code**: 200 OK
     - **Content**:
+      ```json
+      {
+        "message": "User succesfully registered."
+        "user":  {
+            "id": 1,
+            "userId": "hij21k31",
+            "name": "@yonna",
+            "email": "yonas@example.com",
+            // ...
+            "carts": [],
+            "wishlists": []
+        }
+      }
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
         ```json
         {
-          "role": "user/admin"//Optional
-          "email": "exom@example.com",
-          "password": "123456"
+         "message":"Something went wrong",
+         "error":"actual error message"
+        }
+- DELETE /user/:id || /user/delete?id=id
+  - Registers a user on our database
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "User succesfully Deleted."
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Failed to delete user",
+           "error":"actual error message"
+          }
+
+### Products
+- GET /products/list
+  - Fetches all product data including relational datas variation.
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+        "id": 1,
+        "productId": "hij21k31",
+        "title": "dolor",
+        "description": "lorem",
+        "category":"ipsum"
+        "variations": [{},{}],
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message": "Failed to fetch products",
+           "error": "actual error message"
+        }
+- POST /products/upload
+  - Uploads  a product to the product model
+  - Request body
+      - **Content**:
+          ```json
+          {
+            "title": "dolor"
+            "decription": "ipsum",
+            "category": "lorem",
+            "price": 123
+            "variations":
+              [{
+                color,
+              sizes // array,
+              imgUrls// array,
+              stock
+            },
+              {},
+              {}
+            ] // Don't forget to stringify this 
+          "
         }
   - Returns:
     - Success Response
@@ -57,15 +147,12 @@ https://localhost:8000
       - **Content**:
         ```json
         {
-          "message": "User succesfully registered."
-          "user":  {
+          "message": "Product succesfully Created."
+          "product":  {
               "id": 1,
-              "userId": "hij21k31",
-              "name": "@yonna",
-              "email": "yonas@example.com",
+              "productId": "hij21k31",
               // ...
-              "carts": [],
-              "wishlists": []
+              "variations": [],
           }
         }
       - Error Response
@@ -73,7 +160,25 @@ https://localhost:8000
         - **Content**:
           ```json
           {
-           "message":"Something went wrong",
+           "message":"Failed to upload product",
+           "error":"actual error message"
+          }
+- DELETE /product/:id || /product/delete?id=id
+  - Registers a user on our database
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "Product succesfully Deleted."
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Failed to delete product",
            "error":"actual error message"
           }
   
