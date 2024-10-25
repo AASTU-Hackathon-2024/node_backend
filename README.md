@@ -162,7 +162,7 @@ https://localhost:8000
            "message":"Failed to upload product",
            "error":"actual error message"
           }
-- DELETE /product/:id || /product/delete?id=id
+- DELETE /product/:id or /product/delete?id=id both end points will ensure the deletion
   - Registers a user on our database
   - Returns:
     - Success Response
