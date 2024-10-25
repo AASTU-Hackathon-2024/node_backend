@@ -12,8 +12,7 @@ https://localhost:8000
     - Success Response
       - **Code**: 200 OK
       - **Content**:
-      - ```json
-{
+      - ```json{
   "id": 1,
   "userId":"hijaka32",
   "name": "John Doe",
@@ -25,6 +24,7 @@ https://localhost:8000
   "wishlists":[]
   ...
 }
+
   
   
 
