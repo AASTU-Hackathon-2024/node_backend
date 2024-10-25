@@ -15,21 +15,21 @@ https://localhost:8000
       - **Content**:
         ```json
         {
-        "id":1,
-        "userId":"hij21k31",
-        "name":"@yonna",
-        "email":"yonas@example.com",
-        //...
-        "carts":[],
-        "wishlists":[]
+        "id": 1,
+        "userId": "hij21k31",
+        "name": "@yonna",
+        "email": "yonas@example.com",
+        // ...
+        "carts": [],
+        "wishlists": []
         }
       - Error Response
         - **Code**: 400 Bad Request
         - **Content**:
           ```json
           {
-           "message":"Something went wrong",
-           "error":"actual error message"
+           "message": "Something went wrong",
+           "error": "actual error message"
           }
   - POST /user/signup
   - Registers a user on our database
@@ -37,9 +37,9 @@ https://localhost:8000
     - **Content**:
         ```json
         {
-          "role":"user/admin"//Optional
-          "email":"exom@example.com",
-          "password":"123456"
+          "role": "user/admin"//Optional
+          "email": "exom@example.com",
+          "password": "123456"
         }
   - Returns:
     - Success Response
@@ -47,15 +47,15 @@ https://localhost:8000
       - **Content**:
         ```json
         {
-          "message":"User succesfully registered.
+          "message": "User succesfully registered."
           "user":  {
-              "id":1,
-              "userId":"hij21k31",
-              "name":"@yonna",
-              "email":"yonas@example.com",
-              //...
-              "carts":[],
-              "wishlists":[]
+              "id": 1,
+              "userId": "hij21k31",
+              "name": "@yonna",
+              "email": "yonas@example.com",
+              // ...
+              "carts": [],
+              "wishlists": []
           }
         }
       - Error Response
