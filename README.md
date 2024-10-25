@@ -2,7 +2,8 @@
 ## Overview
 This API provides endpoints for managing users, products, orders, in the e-commerce application.
 ### Authentication 
-**Important:** There is currently no authentication for any services although we will consider jwt later.
+>[!IMPORTANT]
+>The presentation for this project can be found [here](https://docs.google.com/presentation/d/1n44tMqlEyhkb-9rr1NfcZx1toJJWQzJ8TZ0VsvpXmLA/edit?usp=sharing).
 ### Base_URL
 https://localhost:8000
 ### Users
@@ -12,7 +13,7 @@ https://localhost:8000
     - Success Response
       - **Code**: 200 OK
       - **Content**:
-      - ```json{
+      - ```json {
   "id": 1,
   "userId":"hijaka32",
   "name": "John Doe",
