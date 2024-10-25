@@ -34,7 +34,7 @@ https://localhost:8000
         "wishlists": []
         }
       - Error Response
-        - **Code**: 400 Bad Request
+        - **Code**: 400/500 Bad Request
         - **Content**:
           ```json
           {
@@ -69,13 +69,44 @@ https://localhost:8000
         }
       }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400/500 Bad Request
       - **Content**:
         ```json
         {
          "message":"Something went wrong",
          "error":"actual error message"
         }
+- POST /user/signin
+  - allows user to be verified and registered.
+  - Request body
+      - **Content**:
+          ```json
+          {
+           "email": "lorem@ipsum.com",
+           "password" : 123456789
+          }
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "User-signin succesfully."
+          "user":  {
+              "id": 1,
+              "productId": "hij21k31",
+              // ...
+              "carts": [],
+              "wishlists"
+          }
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Failed to register user",
+           "error":"actual error message"
 - DELETE /user/:id || /user/delete?id=id
   - Registers a user on our database
   - Returns:
@@ -94,7 +125,7 @@ https://localhost:8000
            "message":"Failed to delete user",
            "error":"actual error message"
           }
-
+          }
 ### Products
 - GET /products/list
   - Fetches all product data including relational datas variation.
@@ -180,7 +211,50 @@ https://localhost:8000
            "message":"Failed to delete product",
            "error":"actual error message"
           }
-  
+### Auth
+- POST /user/upload
+  - Uploads  a product to the product model
+  - Request body
+      - **Content**:
+          ```json
+          {
+            "title": "dolor"
+            "decription": "ipsum",
+            "category": "lorem",
+            "price": 123
+            "variations":
+              [{
+                color,
+                sizes,    // array,
+                imgUrls, // array,
+                stock
+            },
+              {},
+              {}
+            ] // Don't forget to stringify this 
+        }
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "Product succesfully Created."
+          "product":  {
+              "id": 1,
+              "productId": "hij21k31",
+              // ...
+              "variations": [],
+          }
+        }
+      - Error Response
+        - **Code**: 400 Bad Request
+        - **Content**:
+          ```json
+          {
+           "message":"Failed to upload product",
+           "error":"actual error message"
+          }  
   
 
 
