@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
+    "server": "nodemon",
     "start": "node index.js",
     "migrate": "npx prisma migrate dev --name",
     "reset": "npx prisma migrate reset"
@@ -34,9 +34,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "multer": "^1.4.5-lts.1",
-    "multipart": "^0.1.5",
-    "node-fetch": "^2.7.0",
     "prisma": "^5.21.1",
     "short-unique-id": "^5.2.0"
   }

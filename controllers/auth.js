@@ -1,4 +1,7 @@
+import { PrismaClient } from "@prisma/client";
 import { verifyPassword } from "../utils/password.js";
+
+const prisma = new PrismaClient();
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
@@ -19,12 +22,12 @@ const signIn = async (req, res) => {
 
     res.json({
       message: "Sign-in successful",
-      accessToken,
+      user,
     });
   } catch (error) {
     console.error("Error during sign-in:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "failed to signin", error: error.message });
   }
 };
 
-export {signIn}
+export { signIn };
