@@ -15,7 +15,7 @@ npm run server
 >[!IMPORTANT]
 >There is currently no authentication for this service so there is no need for Authorization although we will consider jwt for later.
 ### Base_URL
-https://localhost:8000
+http://localhost:8000
 ### Users
 - GET /user/list
   - Fetches all user data including relational datas such as carts and wishlist.
