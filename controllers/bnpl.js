@@ -1,5 +1,19 @@
 const uploadKyc = async (req, res) => {
-  console.log(req.body);
+//   model Kyc {
+//   id      Int     @id @default(autoincrement())
+//   userId  String  @unique @map("user_id")
+//   idNo    String  @map("id_no")
+//   idUrl   String  @map("id_url")
+//   address String
+//   zipcode String?
+//   phone   String
+//   email   String
+//   status  KycStatus  @default(PENDING)
+
+//   user User @relation(fields: [userId], references: [userId])
+// }
+// const {}
+console.log(req.nody)
 };
 
 const checkLegiblity = async (req, res) => {
@@ -8,4 +22,8 @@ const checkLegiblity = async (req, res) => {
   console.log(id);
 };
 
-export { uploadKyc, checkLegiblity };
+const updateKyc = async (req,res)=>{
+    console.log(req.body);
+}
+
+export { uploadKyc, checkLegiblity,updateKyc };

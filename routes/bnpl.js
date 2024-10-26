@@ -1,5 +1,5 @@
 import express from "express";
-import { checkLegiblity, uploadKyc } from "../controllers/bnpl.js";
+import { checkLegiblity, updateKyc, uploadKyc } from "../controllers/bnpl.js";
 
 const bnplRouter = express.Router();
 

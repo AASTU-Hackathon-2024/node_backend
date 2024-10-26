@@ -14,5 +14,6 @@ productRouter.post("/upload", postProduct);
 productRouter.post("/cart/create", addToCart);
 productRouter.delete("/:id", removeProduct);
 productRouter.post("/wishlist/create", addToWishlist);
+// productRouter.get("/:id")
 
 export default productRouter;

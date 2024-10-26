@@ -11,7 +11,6 @@ const getProducts = async (req, res) => {
     const products = await prisma.product.findMany({
       include: { variations: true },
     });
-    console.log(products);
 
     res.status(200).json(products);
   } catch (error) {
@@ -24,9 +23,41 @@ const postProduct = async (req, res) => {
   try {
     const { title, description, category, price, variations } = req.body;
     const productId = uid.rnd(10);
-    res.status(200).json({ message: "succesful" });
+    const stock = variations.reduce((acc, v) => v.stock + acc, 0);
 
-    // Create the uploads directory if it doesn't exist
+    const newProduct = await prisma.product.create({
+      data: {
+        title,
+        description,
+        category,
+        price,
+        productId,
+        stock,
+      },
+    });
+    if (!newProduct) throw new Error("Failed to upload product");
+    variations.map(async (variation) => {
+      try {
+        const { color, sizes, stock, imgUrls } = variation;
+        await prisma.variation.create({
+          data: {
+            color,
+            size: JSON.stringify(sizes),
+            imgUrl: JSON.stringify(imgUrls),
+            stock,
+            product: {
+              connect: { productId },
+            },
+          },
+        });
+      } catch (err) {
+        console.error(err.message);
+        res
+          .status(500)
+          .json({ message: "Error creating variation", error: err.message });
+      }
+    });
+    res.status(200).json({ message: "succesful", newProduct });
   } catch (error) {
     console.error("Error uploading product", error);
     res.status(500).json({ message: "failed to upload product", error });

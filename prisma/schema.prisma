@@ -9,14 +9,17 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  userId   String    @unique @map("user_id")
-  name     String?   @db.VarChar(50)
-  email    String    @unique @db.VarChar(255)
-  password String
-  imgUrl   String?   @map("img_url")
-  role     UserRole? @default(USER)
-  gender   String?   @db.VarChar(1)
+  id            Int       @id @default(autoincrement())
+  userId        String    @unique @map("user_id")
+  name          String?   @db.VarChar(50)
+  email         String    @unique @db.VarChar(255)
+  password      String
+  imgUrl        String?   @map("img_url")
+  role          UserRole? @default(USER)
+  gender        String?   @db.VarChar(1)
+
+  createdAt   DateTime    @default(now())@map("created_at") // Timestamp when the order was created
+  updatedAt   DateTime    @updatedAt@map("updated_at") // Timestamp when the order was last updated
 
   carts     Cart[]
   wishlists WishList[]
@@ -33,6 +36,9 @@ model Product {
   price       Float
   stock       Int
 
+  createdAt   DateTime    @default(now())@map("created_at") // Timestamp when the order was created
+  updatedAt   DateTime    @updatedAt@map("updated_at") // Timestamp when the order was last updated
+
   carts      Cart[]
   wishlists  WishList[]
   variations Variation[]
@@ -43,10 +49,10 @@ model Variation {
   id        Int    @id @default(autoincrement())
   productId String @map("product_id") // Reference to the base product
   color     String // Color of the variation
-  size      Json?   // Optional attribute
-  imgUrl    String @map("img_url")
+  size      Json   // Optional attribute
+  imgUrl    Json @map("img_url")
 
-  stock    Stock?
+  stock    Int
   wishlist WishList[]
   product  Product    @relation(fields: [productId], references: [productId], onDelete: Cascade) // Relationship to Product
   cart     Cart[]
@@ -101,11 +107,13 @@ model Order {
   productId   String        // Reference to the product which is placed in the order
   amount      Float         // Total amount for the order
   status      OrderStatus   @default(PENDING) // Order status
-  createdAt   DateTime      @default(now())@map("created_at") // Timestamp when the order was created
-  updatedAt   DateTime      @updatedAt@map("updated_at") // Timestamp when the order was last updated
   address     String
   zipcode     String?
   phone       String
+
+  createdAt   DateTime      @default(now())@map("created_at") // Timestamp when the order was created
+  updatedAt   DateTime      @updatedAt@map("updated_at") // Timestamp when the order was last updated
+
 
   user User @relation(fields: [userId], references: [userId], onDelete: Cascade) // Relationship to User
   proudct Product @relation(fields: [productId],references: [productId],onDelete: Cascade)
@@ -116,8 +124,6 @@ model Stock {
   itemId    Int @unique @map("product_id")
   quantity  Int
   threshold Int @default(5)
-
-  variation Variation @relation(fields: [itemId], references: [id])
 }
 
 enum UserRole {
