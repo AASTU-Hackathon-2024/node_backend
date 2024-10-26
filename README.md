@@ -34,7 +34,7 @@ http://localhost:8000
         "wishlists": []
         }
     - Error Response
-      - **Code**: 400/500 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
@@ -69,7 +69,7 @@ http://localhost:8000
         }
       }
   - Error Response
-    - **Code**: 400/500 Bad Request
+    - **Code**: 400 / 500 Bad Request / Internal server error 
     - **Content**:
       ```json
       {
@@ -101,14 +101,14 @@ http://localhost:8000
           }
         }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
          "message":"Failed to register user",
          "error":"actual error message"
         }
-- DELETE /user/:id || /user/delete?id=id
+- DELETE /user/:id or /user/delete?id=id
   - Registers a user on our database
   - Returns:
     - Success Response
@@ -119,7 +119,7 @@ http://localhost:8000
           "message": "User succesfully Deleted."
         }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
@@ -143,7 +143,7 @@ http://localhost:8000
         "variations": [{},{}],
         }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
@@ -186,7 +186,7 @@ http://localhost:8000
           }
         }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
@@ -204,14 +204,13 @@ http://localhost:8000
           "message": "Product succesfully Deleted."
         }
   - Error Response
-    - **Code**: 400 Bad Request
+    - **Code**: 400 / 500 Bad Request / Internal server error 
     - **Content**:
       ```json
       {
        "message":"Failed to delete product",
        "error":"actual error message"
       }
-### Auth
 - POST /product/upload
   - Uploads  a product to the product model
   - Request body
@@ -248,7 +247,7 @@ http://localhost:8000
           }
         }
     - Error Response
-      - **Code**: 400 Bad Request
+      - **Code**: 400 / 500 Bad Request / Internal server error 
       - **Content**:
         ```json
         {
