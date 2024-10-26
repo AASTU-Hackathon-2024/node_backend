@@ -156,21 +156,42 @@ http://localhost:8000
       - **Content**:
           ```json
           {
-            "title": "dolor"
-            "decription": "ipsum",
-            "category": "lorem",
-            "price": 123
-            "variations":
-              [{
-                color,
-                sizes,    // array,
-                imgUrls, // array,
-                stock
-            },
-              {},
-              {}
-            ] // Don't forget to stringify this 
-        }
+          "title": "headset",
+          "description": "Experience exceptional sound quality with the JBL Headset, designed for comfort and durability. Enjoy deep bass and clear highs for an immersive listening experience. The soft ear cushions and               adjustable headband ensure all-day comfort, while the built-in microphone allows for effortless calls. With up to 20 hours of playtime on a single charge, this headset is perfect for music lovers and                       professionals alike, delivering both performance and style in a sleek design.",
+          "category": "jbl",
+          "price": 4000,
+          "variations": [
+          {
+              "color": "black",
+              "sizes": [
+                  "xs",
+                  "s",
+                  "m",
+                  "l",
+                  "xl"
+              ],
+              "imgUrls": [
+                  "https://jolt.com.pk/cdn/shop/files/ScreenShot2024-03-19at4.37.30PM.png?v=1710848391",
+                  "https://m.media-amazon.com/images/I/61Gh-JT7YML.jpg",
+                  "https://m.media-amazon.com/images/I/61oGAG5r7cL._AC_UF894,1000_QL80_.jpg"
+              ],
+              "stock": 30
+          },
+          {
+              "color": "red",
+              "sizes": [
+                  "xs",
+                  "s",
+                  "m",
+                  "l",
+                  "xl"
+              ],
+              "imgUrls": [
+                  "https://1pc.co.il/images/thumbs/0017683_jbl-tune-t750btnc-6925281968501_510.jpeg",
+                  "https://m.media-amazon.com/images/I/61Gh-JT7YML.jpg"
+              ],
+              "stock": 50
+          }]}
   - Returns:
     - Success Response
       - **Code**: 200 OK
