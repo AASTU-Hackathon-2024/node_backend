@@ -215,7 +215,7 @@ http://localhost:8000
          "error":"actual error message"
         }
 - DELETE /products/:id or /products/delete?id=id both end points will ensure the deletion
-  - Registers a user on our database
+  - Removes a specific product and all it's references in the database
   - Returns:
     - Success Response
       - **Code**: 200 OK
@@ -232,49 +232,6 @@ http://localhost:8000
        "message":"Failed to delete product",
        "error":"actual error message"
       }
-- POST /product/upload
-  - Uploads  a product to the product model
-  - Request body
-      - **Content**:
-          ```json
-          {
-            "title": "dolor"
-            "decription": "ipsum",
-            "category": "lorem",
-            "price": 123
-            "variations":
-              [{
-                color,
-                sizes,    // array,
-                imgUrls, // array,
-                stock
-            },
-              {},
-              {}
-            ] // Don't forget to stringify this 
-        }
-  - Returns:
-    - Success Response
-      - **Code**: 200 OK
-      - **Content**:
-        ```json
-        {
-          "message": "Product succesfully Created."
-          "product":  {
-              "id": 1,
-              "productId": "hij21k31",
-              // ...
-              "variations": [],
-          }
-        }
-    - Error Response
-      - **Code**: 400 / 500 Bad Request / Internal server error 
-      - **Content**:
-        ```json
-        {
-         "message":"Failed to upload product",
-         "error":"actual error message"
-        }  
   
 
 
