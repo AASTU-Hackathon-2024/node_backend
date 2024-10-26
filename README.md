@@ -33,14 +33,14 @@ http://localhost:8000
         "carts": [],
         "wishlists": []
         }
-      - Error Response
-        - **Code**: 400/500 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message": "Something went wrong",
-           "error": "actual error message"
-          }
+    - Error Response
+      - **Code**: 400/500 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message": "Something went wrong",
+         "error": "actual error message"
+        }
 - POST /user/signup
 - Registers a user on our database
 - Request body
@@ -68,14 +68,14 @@ http://localhost:8000
             "wishlists": []
         }
       }
-    - Error Response
-      - **Code**: 400/500 Bad Request
-      - **Content**:
-        ```json
-        {
-         "message":"Something went wrong",
-         "error":"actual error message"
-        }
+  - Error Response
+    - **Code**: 400/500 Bad Request
+    - **Content**:
+      ```json
+      {
+       "message":"Something went wrong",
+       "error":"actual error message"
+      }
 - POST /user/signin
   - allows user to be verified and registered.
   - Request body
@@ -100,13 +100,14 @@ http://localhost:8000
               "wishlists"
           }
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message":"Failed to register user",
-           "error":"actual error message"
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to register user",
+         "error":"actual error message"
+        }
 - DELETE /user/:id || /user/delete?id=id
   - Registers a user on our database
   - Returns:
@@ -117,14 +118,14 @@ http://localhost:8000
         {
           "message": "User succesfully Deleted."
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message":"Failed to delete user",
-           "error":"actual error message"
-          }
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to delete user",
+         "error":"actual error message"
+        }
 ### Products
 - GET /products/list
   - Fetches all product data including relational datas variation.
@@ -141,14 +142,14 @@ http://localhost:8000
         "category":"ipsum"
         "variations": [{},{}],
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message": "Failed to fetch products",
-           "error": "actual error message"
-          }
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message": "Failed to fetch products",
+         "error": "actual error message"
+        }
 - POST /products/upload
   - Uploads  a product to the product model
   - Request body
@@ -184,15 +185,15 @@ http://localhost:8000
               "variations": [],
           }
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message":"Failed to upload product",
-           "error":"actual error message"
-          }
-- DELETE /product/:id or /product/delete?id=id both end points will ensure the deletion
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to upload product",
+         "error":"actual error message"
+        }
+- DELETE /products/:id or /products/delete?id=id both end points will ensure the deletion
   - Registers a user on our database
   - Returns:
     - Success Response
@@ -202,16 +203,16 @@ http://localhost:8000
         {
           "message": "Product succesfully Deleted."
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message":"Failed to delete product",
-           "error":"actual error message"
-          }
+  - Error Response
+    - **Code**: 400 Bad Request
+    - **Content**:
+      ```json
+      {
+       "message":"Failed to delete product",
+       "error":"actual error message"
+      }
 ### Auth
-- POST /user/upload
+- POST /product/upload
   - Uploads  a product to the product model
   - Request body
       - **Content**:
@@ -246,14 +247,14 @@ http://localhost:8000
               "variations": [],
           }
         }
-      - Error Response
-        - **Code**: 400 Bad Request
-        - **Content**:
-          ```json
-          {
-           "message":"Failed to upload product",
-           "error":"actual error message"
-          }  
+    - Error Response
+      - **Code**: 400 Bad Request
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to upload product",
+         "error":"actual error message"
+        }  
   
 
 
