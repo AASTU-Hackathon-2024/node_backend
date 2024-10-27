@@ -17,30 +17,6 @@ npm run server
 ### Base_URL
 http://localhost:8000
 ### Users
-- GET /user/list
-  - Fetches all user data including relational datas such as carts and wishlist.
-  - Returns:
-    - Success Response
-      - **Code**: 200 OK
-      - **Content**:
-        ```json
-        {
-        "id": 1,
-        "userId": "hij21k31",
-        "name": "@yonna",
-        "email": "yonas@example.com",
-        // ...
-        "carts": [],
-        "wishlists": []
-        }
-    - Error Response
-      - **Code**: 400 / 500 Bad Request / Internal server error 
-      - **Content**:
-        ```json
-        {
-         "message": "Something went wrong",
-         "error": "actual error message"
-        }
 - POST /user/signup
 - Registers a user on our database
 - Request body
@@ -108,7 +84,56 @@ http://localhost:8000
          "message":"Failed to register user",
          "error":"actual error message"
         }
-- DELETE /user/:id or /user/delete?id=id
+- GET /user/list
+  - Fetches all user data including relational datas such as carts and wishlist.
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        [{
+        "id": 1,
+        "userId": "hij21k31",
+        "name": "@yonna",
+        "email": "yonas@example.com",
+        // ...
+        "carts": [],
+        "wishlists": []
+        }]
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error 
+      - **Content**:
+        ```json
+        {
+         "message": "Failed to fetch users",
+         "error": "actual error message"
+        }
+- GET /user/${id} or /users/fetch?id=${id}
+  - Fetches all data of specific user including relational datas such as carts and wishlist.
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+        "id": 1,
+        "userId": "hij21k31",
+        "name": "@yonna",
+        "email": "yonas@example.com",
+        // ...
+        "carts": [],
+        "wishlists": []
+        }
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error
+      - throws an error if the user with id doesn't exist as well 
+      - **Content**:
+        ```javascript
+        {
+         "message": `Failed to fetch user-${id}`,
+         "error": "actual error message"
+        }
+- DELETE /user/${id} or /user/delete?id=${id}
   - Registers a user on our database
   - Returns:
     - Success Response
@@ -126,6 +151,34 @@ http://localhost:8000
          "message":"Failed to delete user",
          "error":"actual error message"
         }
+
+- POST /cart/add 
+  - adds a cart to the user cart list on our database
+  - Request body
+    - **Content**:
+        ```javascript
+        {
+          "userId":"${userId},
+          "quantity":50,
+          "variationId":
+        }
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "cart item added succesfully."
+        }
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error 
+      - **Content**:
+        ```json
+        {
+         "message":"Internal server error",
+         "error":"actual error message"
+        }
+  
 ### Products
 - GET /products/list
   - Fetches all product data including relational datas variation.
