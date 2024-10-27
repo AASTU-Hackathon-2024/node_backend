@@ -36,11 +36,15 @@ const postProduct = async (req, res) => {
       },
     });
     if (!newProduct) throw new Error("Failed to upload product");
-    variations.map(async (variation) => {
+    const variationPromises = variations.map(async (variation) => {
+      const variationId = uid.rnd(6);
+      const { color, sizes, stock, imgUrls } = variation;
+
       try {
-        const { color, sizes, stock, imgUrls } = variation;
-        await prisma.variation.create({
+        // Create variation
+        const newVariation = await prisma.variation.create({
           data: {
+            variationId,
             color,
             size: JSON.stringify(sizes),
             imgUrl: JSON.stringify(imgUrls),
@@ -50,13 +54,28 @@ const postProduct = async (req, res) => {
             },
           },
         });
-      } catch (err) {
-        console.error(err.message);
-        res
-          .status(500)
-          .json({ message: "Error creating variation", error: err.message });
+
+        // Create stock entry
+        await prisma.stock.create({
+          data: {
+            quantity: stock,
+            product: {
+              connect: { productId },
+            },
+            variation: {
+              connect: { variationId },
+            },
+          },
+        });
+
+        return newVariation; // Return the created variation
+      } catch (variationError) {
+        // Log error for the specific variation
+        console.error("Error adding variation:", variationError);
+        throw new Error("Variation or stock failed to be added");
       }
     });
+    await Promise.all(variationPromises);
     res.status(200).json({ message: "succesful", newProduct });
   } catch (error) {
     console.error("Error uploading product", error);
@@ -67,8 +86,7 @@ const postProduct = async (req, res) => {
 const removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = prisma.product.delete({ where: { productId: id } });
-    console.log(deleted);
+    await prisma.product.delete({ where: { productId: id } });
     res.status(200).json({ message: "Product deleted succesfully." });
   } catch (err) {
     console.error(err);
@@ -78,50 +96,50 @@ const removeProduct = async (req, res) => {
   }
 };
 
-const addToCart = async (req, res) => {
-  const { userId, productId, variationId, quantity } = req.body;
-  if (!userId || !productId)
-    res.status(400).json({ message: "User id and product id is required" });
-
+const getProduct = async (req, res) => {
+  const { id } = req.params;
   try {
-    const item = prisma.cart.create({
-      data: {
-        userId,
-        productId,
-        variationId,
-        quantity,
-      },
+    const product = await prisma.product.findUnique({
+      where: { productId: id },
+      include: { variations: true },
     });
-    res.status(200).json({ message: "item added to cart succesfully", item });
+    if (!product) throw new Error("There is no proudct by this id");
+    res.status(200).json(product);
   } catch (err) {
-    console.error(err.message);
+    console.error(err);
     res
       .status(500)
-      .json({ message: "Internal server error", error: err.message });
+      .json({ message: `failed to fetch proudct-${id}`, error: err.message });
   }
 };
 
-const addToWishlist = async (req, res) => {
-  const { userId, productId, variationId, quantity } = req.body;
-  if (!userId || !productId)
-    res.status(400).json({ message: "User id and product id is required" });
-
+const isAvailable = async (req, res) => {
+  const { productId, variationId } = req.body;
+  console.log(productId);
   try {
-    const item = prisma.wishList.create({
-      data: {
-        userId,
+    const product = await prisma.stock.findUnique({
+      where: {
         productId,
         variationId,
-        quantity,
       },
     });
-    res.status(200).json({ message: "item added to cart succesfully", item });
-  } catch (err) {
-    console.error(err.message);
+
+    if (!product.quantity) {
+      res.status(200).json({
+        message: "Product is out of stock. Please try another.",
+        isAvailable: false,
+      });
+    }
     res
-      .status(500)
-      .json({ message: "Internal server error", error: err.message });
+      .status(200)
+      .json({ message: "Product is available", isAvailable: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Failed to confirm product availablity. Try again.",
+      error: err.message,
+    });
   }
 };
 
-export { getProducts, postProduct, addToCart, removeProduct, addToWishlist };
+export { getProduct, getProducts, postProduct, removeProduct, isAvailable };

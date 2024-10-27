@@ -51,8 +51,23 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: id },
+      include: { carts: true, wishlists: true, kyc: true },
+    });
+    if (!user) throw new Error("Failed to fetch user");
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user", error);
+    res.status(500).json({ message: `Failed to fetch user-${id}`, error });
+  }
+};
+
 const deleteUser = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
   console.log(id);
   if (!id) res.status(400).json({ message: "id is required to delete user" });
   try {
@@ -66,4 +81,104 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createUser, getUsers, deleteUser };
+const addToCart = async (req, res) => {
+  const { userId, productId, variationId, quantity } = req.body;
+  if (!userId || !productId)
+    res.status(400).json({ message: "User id and product id is required" });
+
+  try {
+    const item = await prisma.cart.create({
+      data: {
+        quantity,
+        user: {
+          connect: { userId },
+        },
+        product: {
+          connect: { productId },
+        },
+        variation: {
+          connect: { variationId },
+        },
+      },
+    });
+    res.status(200).json({ message: "item added to cart succesfully", item });
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
+
+const addToWishlist = async (req, res) => {
+  const { userId, productId, variationId } = req.body;
+  if (!userId || !productId)
+    res.status(400).json({ message: "User id and product id is required" });
+
+  try {
+    const item = await prisma.wishList.create({
+      data: {
+        user: {
+          connect: { userId },
+        },
+        product: {
+          connect: { productId },
+        },
+        variation: {
+          connect: { variationId },
+        },
+      },
+    });
+    res
+      .status(200)
+      .json({ message: "item added to Wishilist succesfully", item });
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
+
+const removeCartItem = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.cart.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(200).json({ message: "item removed from cart succesfully" });
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
+
+const removeWishlistItem = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.wishList.delete({
+      where: { id: parseInt(id) },
+    });
+    res
+      .status(200)
+      .json({ message: "item removed to wishilist succesfully", item });
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
+
+export {
+  createUser,
+  getUsers,
+  getUser,
+  deleteUser,
+  addToCart,
+  addToWishlist,
+  removeCartItem,
+  removeWishlistItem,
+};

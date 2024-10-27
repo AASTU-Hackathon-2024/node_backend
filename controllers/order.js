@@ -12,7 +12,8 @@ const placeOrder = async (req, res) => {
       address,
       userId,
       productId,
-      zipcode = null,
+      variationId,
+      zipcode,
       phone,
     } = req.body;
 
@@ -26,12 +27,24 @@ const placeOrder = async (req, res) => {
       data: {
         amount,
         status,
-        address,
-        userId,
-        productId,
+        shippingAddress: address,
         zipcode,
         phone,
         orderId,
+
+        variation: {
+          connect: {
+            variationId,
+          },
+        },
+        product: {
+          connect: { productId },
+        },
+        user: {
+          connect: {
+            userId,
+          },
+        },
       },
     });
 

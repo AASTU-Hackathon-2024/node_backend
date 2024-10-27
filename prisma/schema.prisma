@@ -43,32 +43,38 @@ model Product {
   wishlists  WishList[]
   variations Variation[]
   orders     Order[]
+  Stock      Stock[]
 }
 
 model Variation {
-  id        Int    @id @default(autoincrement())
-  productId String @map("product_id") // Reference to the base product
-  color     String // Color of the variation
-  size      Json   // Optional attribute
-  imgUrl    Json @map("img_url")
+  id              Int    @id @default(autoincrement())
+  productId       String @map("product_id") // Reference to the base product
+  variationId     String @unique@map("variation_id")
+  color           String // Color of the variation
+  size            Json   // Optional attribute
+  imgUrl          Json @map("img_url")
+  stock           Int
 
-  stock    Int
-  wishlist WishList[]
-  product  Product    @relation(fields: [productId], references: [productId], onDelete: Cascade) // Relationship to Product
-  cart     Cart[]
+  @@unique([productId,variationId])
+
+  wishlist    WishList[]
+  product     Product    @relation(fields: [productId], references: [productId], onDelete: Cascade) // Relationship to Product
+  cart        Cart[]
+  order       Order[]
+  Stock       Stock?
 }
 
 model Cart {
   id          Int      @id @default(autoincrement())
   userId      String   @map("user_id")
   productId   String   @map("product_id")
-  variationId Int
+  variationId String   @map("variation_id")
   quantity    Int      @default(1)
   addedAt     DateTime @default(now()) @map("added_at")
 
   user      User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
   product   Product   @relation(fields: [productId], references: [productId], onDelete: Cascade)
-  variation Variation @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  variation Variation @relation(fields: [variationId], references: [variationId], onDelete: Cascade)
 
   @@unique([userId, productId, variationId]) // Prevent duplicate entries
 }
@@ -77,12 +83,12 @@ model WishList {
   id          Int      @id @default(autoincrement())
   userId      String   @map("user_id")
   productId   String   @map("product_id")
-  variationId Int      @map("variation_id")
+  variationId String      @map("variation_id")
   addedAt     DateTime @default(now()) @map("added_at")
 
   user      User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
   product   Product   @relation(fields: [productId], references: [productId], onDelete: Cascade)
-  variation Variation @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  variation Variation @relation(fields: [variationId], references: [variationId], onDelete: Cascade)
 
   @@unique([userId, productId])
 }
@@ -102,28 +108,43 @@ model Kyc {
 }
 
 model Order {
-  id          Int           @id @default(autoincrement())
-  userId      String        // Reference to the User who placed the order
-  productId   String        // Reference to the product which is placed in the order
-  amount      Float         // Total amount for the order
-  status      OrderStatus   @default(PENDING) // Order status
-  address     String
-  zipcode     String?
-  phone       String
+  id                   Int           @id @default(autoincrement())
+  userId               String        @map("order_id")       // Reference to the User who placed the order
+  productId            String        @map("product_id")    // Reference to the product which is placed in the order
+  variationId          String        @map("variation_id") // Refre to the product variation placed 
+  amount               Float         // Total amount for the order
+  status               OrderStatus   @default(PENDING) // Order status
+  shippingAddress      String        @map("shipping_address")
+  zipcode              String?
+  phone                String?
 
   createdAt   DateTime      @default(now())@map("created_at") // Timestamp when the order was created
   updatedAt   DateTime      @updatedAt@map("updated_at") // Timestamp when the order was last updated
 
+  user        User          @relation(fields: [userId], references: [userId], onDelete: Cascade) // Relationship to User
+  proudct     Product       @relation(fields: [productId],references: [productId],onDelete: Cascade)
+  variation   Variation     @relation(fields: [variationId],references: [variationId],onDelete: Cascade)
+}
 
-  user User @relation(fields: [userId], references: [userId], onDelete: Cascade) // Relationship to User
-  proudct Product @relation(fields: [productId],references: [productId],onDelete: Cascade)
+model Payment {
+  id              Int             @id @default(autoincrement())
+  paymentId       String          @default("payment_id")
+  orderId         Int             @map("order_id")
+  status          PaymentStatus   @default(INCOMPLETE)
 }
 
 model Stock {
-  id        Int @id @default(autoincrement())
-  itemId    Int @unique @map("product_id")
-  quantity  Int
-  threshold Int @default(5)
+  id             Int       @id @default(autoincrement())
+  variationId    String    @unique@map("variation_id")
+  productId      String    @map("product_id")
+  quantity       Int
+  threshold      Int       @default(5)
+  location       String    @default("123 Main St.")
+
+  @@unique([productId,variationId])
+
+  product   Product     @relation(fields: [productId],references: [productId],onDelete: Cascade)
+  variation Variation   @relation(fields: [variationId],references: [variationId],onDelete: Cascade)
 }
 
 enum UserRole {
@@ -141,4 +162,9 @@ enum KycStatus{
   PENDING
   APPROVED
   DENIED
+}
+
+enum PaymentStatus{
+  COMPLETE
+  INCOMPLETE
 }
