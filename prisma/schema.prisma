@@ -111,7 +111,7 @@ model Kyc {
 
 model Order {
   id                   Int           @id @default(autoincrement())
-  userId               String        @map("order_id")       // Reference to the User who placed the order
+  userId               String        @map("er_id")       // Reference to the User who placed the order
   productId            String        @map("product_id")    // Reference to the product which is placed in the order
   variationId          String        @map("variation_id") // Refre to the product variation placed 
   amount               Float         // Total amount for the order
