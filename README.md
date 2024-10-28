@@ -285,6 +285,104 @@ http://localhost:8000
        "message":"Failed to delete product",
        "error":"actual error message"
       }
+
+  ### Order
+  - GET /order/list
+  - gets all order details.
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        [
+          {
+            "id": 1,
+            "userId": "user_12345",
+            "productId": "product_67890",
+            "variationId": "variation_13579",
+            "amount": 49.99,
+            "status": "PENDING",
+            "shippingAddress": "123 Main St, Springfield, USA",
+            "zipcode": "12345",
+            "phone": "+1234567890",
+          }
+        ]
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error 
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to fetch orders",
+         "error":"actual error message"
+        }
+  - POST /order/create
+  - Uploads  an order to the order model
+  - Request body
+      - **Content**:
+          ```json
+          {
+            "id": 1,
+            "userId": "user_12345",
+            "productId": "product_67890",
+            "variationId": "variation_13579",
+            "amount": 49.99,
+            "status": "PENDING",
+            "shippingAddress": "123 Main St, Springfield, USA",
+            "zipcode": "12345",
+            "phone": "+1234567890",
+          },
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "Order succesfully Created."
+          "order": {
+            "id": 1,
+            "userId": "user_12345",
+            "productId": "product_67890",
+            "variationId": "variation_13579",
+            "amount": 49.99,
+            "status": "PENDING",
+            "shippingAddress": "123 Main St, Springfield, USA",
+            "zipcode": "12345",
+            "phone": "+1234567890",
+          }
+        }
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error 
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to create order",
+         "error":"actual error message"
+        }
+  - POST /order/update
+  - Uploads  an order to the order model
+  - Request body
+      - **Content**:
+          ```json
+          {
+            "status":"pending-default/confirmed/shipped/delivered"
+          },
+  - Returns:
+    - Success Response
+      - **Code**: 200 OK
+      - **Content**:
+        ```json
+        {
+          "message": "Order status succesfully updated."
+        }
+    - Error Response
+      - **Code**: 400 / 500 Bad Request / Internal server error 
+      - **Content**:
+        ```json
+        {
+         "message":"Failed to update order status",
+         "error":"actual error message"
+        }
+      
   
 
 
