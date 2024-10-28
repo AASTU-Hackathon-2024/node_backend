@@ -37,7 +37,7 @@ const placeOrder = async (req, res) => {
             variationId,
           },
         },
-        product: {
+        proudct: {
           connect: { productId },
         },
         user: {
