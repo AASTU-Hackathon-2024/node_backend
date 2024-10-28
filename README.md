@@ -334,7 +334,7 @@ http://localhost:8000
       - **Content**:
           ```json
           {
-            status:"pending-default/confirmed/shipped/delivered"
+            "status":"pending-default/confirmed/shipped/delivered"
           },
   - Returns:
     - Success Response
