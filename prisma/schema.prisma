@@ -98,6 +98,8 @@ model Kyc {
   userId  String  @unique @map("user_id")
   idNo    String  @map("id_no")
   idUrl   String  @map("id_url")
+  // bnkStmt String  @map("bnk_stmt")//bnk-stmt url
+  // quantity Int
   address String
   zipcode String?
   phone   String
@@ -126,13 +128,6 @@ model Order {
   variation   Variation     @relation(fields: [variationId],references: [variationId],onDelete: Cascade)
 }
 
-model Payment {
-  id              Int             @id @default(autoincrement())
-  paymentId       String          @default("payment_id")
-  orderId         Int             @map("order_id")
-  status          PaymentStatus   @default(INCOMPLETE)
-}
-
 model Stock {
   id             Int       @id @default(autoincrement())
   variationId    String    @unique@map("variation_id")
@@ -155,6 +150,7 @@ enum UserRole {
 enum OrderStatus {
   PENDING
   CONFIRMED
+  SHIPPED
   DELIVERED
 }
 
@@ -164,7 +160,3 @@ enum KycStatus{
   DENIED
 }
 
-enum PaymentStatus{
-  COMPLETE
-  INCOMPLETE
-}

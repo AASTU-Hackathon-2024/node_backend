@@ -26,7 +26,7 @@ const placeOrder = async (req, res) => {
     const order = await prisma.order.create({
       data: {
         amount,
-        status,
+        status: status?.toUpperCase(),
         shippingAddress: address,
         zipcode,
         phone,
@@ -95,4 +95,17 @@ const removeOrder = async (req, res) => {
   }
 };
 
-export { placeOrder, updateOrderStatus, removeOrder };
+const getOrders = async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany();
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({
+      message: "Failed to fetch orders",
+      error: err.message,
+    });
+  }
+};
+
+export { placeOrder, updateOrderStatus, removeOrder, getOrders };

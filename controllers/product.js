@@ -54,7 +54,6 @@ const postProduct = async (req, res) => {
             },
           },
         });
-
         // Create stock entry
         await prisma.stock.create({
           data: {

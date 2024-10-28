@@ -15,6 +15,6 @@ productRouter.delete("/:id", removeProduct);
 productRouter.post("/check-stock", isAvailable);
 productRouter.get("/:id", getProduct);
 
-// productRouter.get("/:id")
+
 
 export default productRouter;

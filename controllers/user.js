@@ -82,6 +82,7 @@ const deleteUser = async (req, res) => {
 };
 
 const addToCart = async (req, res) => {
+    console.log(req.body);
   const { userId, productId, variationId, quantity } = req.body;
   if (!userId || !productId)
     res.status(400).json({ message: "User id and product id is required" });
