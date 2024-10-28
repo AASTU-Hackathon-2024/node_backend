@@ -30,7 +30,6 @@ const placeOrder = async (req, res) => {
         shippingAddress: address,
         zipcode,
         phone,
-        orderId,
 
         variation: {
           connect: {
