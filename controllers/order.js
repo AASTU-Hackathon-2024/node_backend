@@ -57,8 +57,8 @@ const placeOrder = async (req, res) => {
         data: {
           userId,
           orderId,
-          installement,
-          base,
+          installement: 0,
+          base: amount,
         },
       });
     }
@@ -66,6 +66,7 @@ const placeOrder = async (req, res) => {
     res.status(200).json({ message: "Order created succesfully", newOrder });
   } catch (err) {
     console.error(err.message);
+    await prisma.order.delete({ where: { orderId } });
     res
       .status(500)
       .json({ message: "Internal server error", error: err.message });
