@@ -15,40 +15,12 @@ const placeOrder = async (req, res) => {
       variationId,
       zipcode,
       phone,
+      paymentMethod,
       isBnpl,
     } = req.body;
     const orderId = uid.rnd(8);
-    if (isBnpl) {
-      //model bnpl {
-      //   id              Int @id@default(autoincrement())
-      //   userId          String
-      //   orderId         String
-      //   installement    Float
-      //   base            Float
-      //   duration        Float  @default(3)    //interms of month can be passed along with the product details
-      // }
-      const bnplStatus = await prisma.bnpl.findMany({ where: { userId } });
-      if (
-        bnplStatus?.some((record) => record.installement !== record.base) &&
-        bnplStatus.length
-      )
-        res.status(400).json({ message: "Pay your current bnpl debt" });
-      prisma.bnpl.create({
-        data: {
-          userId,
-          orderId,
-          installement,
-          base
-        },
-      });
-    }
 
-    const user = await prisma.user.findUnique({ where: { userId } });
-    const product = await prisma.product.findUnique({ where: { productId } });
-    if (!user || !product)
-      res.status(400).json({ message: "User doesn't exist" });
-
-    const order = await prisma.order.create({
+    const newOrder = await prisma.order.create({
       data: {
         orderId,
         amount,
@@ -56,6 +28,7 @@ const placeOrder = async (req, res) => {
         shippingAddress: address,
         zipcode,
         phone,
+        PaymentMethod: paymentMethod?.toUpperCase(),
 
         variation: {
           connect: {
@@ -72,8 +45,25 @@ const placeOrder = async (req, res) => {
         },
       },
     });
+    console.log(newOrder);
+    if (isBnpl) {
+      const bnplStatus = await prisma.bnpl.findMany({ where: { userId } });
+      if (
+        bnplStatus?.some((record) => record.installement !== record.base) &&
+        bnplStatus.length
+      )
+        res.status(400).json({ message: "Pay your current bnpl debt" });
+      prisma.bnpl.create({
+        data: {
+          userId,
+          orderId,
+          installement,
+          base,
+        },
+      });
+    }
 
-    res.status(200).json({ message: "Order created succesfully", order });
+    res.status(200).json({ message: "Order created succesfully", newOrder });
   } catch (err) {
     console.error(err.message);
     res

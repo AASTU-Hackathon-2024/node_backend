@@ -99,7 +99,6 @@ model Kyc {
   idNo    String  @map("id_no")
   idUrl   String  @map("id_url")
   // bnkStmt String  @map("bnk_stmt")//bnk-stmt url
-  // quantity Int
   address String
   zipcode String?
   phone   String
