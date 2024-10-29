@@ -21,6 +21,8 @@ model User {
   createdAt   DateTime    @default(now())@map("created_at") // Timestamp when the order was created
   updatedAt   DateTime    @updatedAt@map("updated_at") // Timestamp when the order was last updated
 
+
+  bnpl      bnpl[]
   carts     Cart[]
   wishlists WishList[]
   orders    Order[]
@@ -120,6 +122,7 @@ model Order {
   zipcode              String?
   phone                String?
   PaymentMethod        OrderType     @default(CHAPPA) 
+  bnpl bnpl[]
 
   createdAt   DateTime      @default(now())@map("created_at") // Timestamp when the order was created
   updatedAt   DateTime      @updatedAt@map("updated_at") // Timestamp when the order was last updated
@@ -149,6 +152,9 @@ model bnpl {
   installement    Float    @default(0)
   base            Float
   duration        Int      @default(3)    //interms of month can be passed along with the product details 
+
+  user  User  @relation(fields: [userId],references: [userId],onDelete: Cascade)
+  order Order @relation(fields: [orderId],references: [orderId],onDelete: Cascade)
 }
 
 enum UserRole {
