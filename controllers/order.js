@@ -15,16 +15,42 @@ const placeOrder = async (req, res) => {
       variationId,
       zipcode,
       phone,
+      isBnpl,
     } = req.body;
+    const orderId = uid.rnd(8);
+    if (isBnpl) {
+      //model bnpl {
+      //   id              Int @id@default(autoincrement())
+      //   userId          String
+      //   orderId         String
+      //   installement    Float
+      //   base            Float
+      //   duration        Float  @default(3)    //interms of month can be passed along with the product details
+      // }
+      const bnplStatus = await prisma.bnpl.findMany({ where: { userId } });
+      if (
+        bnplStatus?.some((record) => record.installement !== record.base) &&
+        bnplStatus.length
+      )
+        res.status(400).json({ message: "Pay your current bnpl debt" });
+      prisma.bnpl.create({
+        data: {
+          userId,
+          orderId,
+          installement,
+          base
+        },
+      });
+    }
 
     const user = await prisma.user.findUnique({ where: { userId } });
     const product = await prisma.product.findUnique({ where: { productId } });
     if (!user || !product)
       res.status(400).json({ message: "User doesn't exist" });
 
-    const orderId = uid.rnd(8);
     const order = await prisma.order.create({
       data: {
+        orderId,
         amount,
         status: status?.toUpperCase(),
         shippingAddress: address,

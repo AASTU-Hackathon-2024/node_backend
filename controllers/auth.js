@@ -19,11 +19,13 @@ const signIn = async (req, res) => {
     if (!(await verifyPassword(password, user.password))) {
       return res.json({ errors: { password: "Incorrect password" } });
     }
-
-    res.json({
-      message: "Sign-in successful",
-      user,
-    });
+    if (user.role === "ADMIN") {
+      res.json({
+        message: "Sign-in successful",
+        user,
+      });
+    } else
+      res.status(400).json({ errors: { email: "Access denied for user" } });
   } catch (error) {
     console.error("Error during sign-in:", error);
     res.status(500).json({ message: "failed to signin", error: error.message });

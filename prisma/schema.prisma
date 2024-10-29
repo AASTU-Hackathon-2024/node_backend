@@ -111,7 +111,8 @@ model Kyc {
 
 model Order {
   id                   Int           @id @default(autoincrement())
-  userId               String        @map("er_id")       // Reference to the User who placed the order
+  orderId              String
+  userId               String        @map("user_id")        // Reference to the User who placed the order
   productId            String        @map("product_id")    // Reference to the product which is placed in the order
   variationId          String        @map("variation_id") // Refre to the product variation placed 
   amount               Float         // Total amount for the order
@@ -119,6 +120,7 @@ model Order {
   shippingAddress      String        @map("shipping_address")
   zipcode              String?
   phone                String?
+  PaymentMethod        OrderType     @default(CHAPPA) 
 
   createdAt   DateTime      @default(now())@map("created_at") // Timestamp when the order was created
   updatedAt   DateTime      @updatedAt@map("updated_at") // Timestamp when the order was last updated
@@ -141,6 +143,14 @@ model Stock {
   product   Product     @relation(fields: [productId],references: [productId],onDelete: Cascade)
   variation Variation   @relation(fields: [variationId],references: [variationId],onDelete: Cascade)
 }
+model bnpl {
+  id              Int      @id@default(autoincrement())
+  userId          String 
+  orderId         String   
+  installement    Float    @default(0)
+  base            Float
+  duration        Int      @default(3)    //interms of month can be passed along with the product details 
+}
 
 enum UserRole {
   ADMIN
@@ -152,6 +162,13 @@ enum OrderStatus {
   CONFIRMED
   SHIPPED
   DELIVERED
+}
+
+enum OrderType{
+  BTB
+  BNPL
+  CHAPPA
+  OTHER
 }
 
 enum KycStatus{
