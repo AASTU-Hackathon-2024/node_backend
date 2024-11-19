@@ -19,10 +19,6 @@ const getBnpl = async (req, res) => {
   }
 };
 
-const checkLegiblity = async (req, res) => {
-  const { id } = req.params;
-};
-
 const updateKyc = async (req, res) => {
   const { status, userId } = req.body;
   try {
@@ -32,11 +28,11 @@ const updateKyc = async (req, res) => {
         status,
       },
     });
-    res.status(200).json({});
+    res.status(200).json({ message: "bnpl succesfully created" });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Error updating kyc", error: err });
   }
 };
 
-export { uploadKyc, checkLegiblity, updateKyc, getBnpl };
+export { uploadKyc, updateKyc, getBnpl };

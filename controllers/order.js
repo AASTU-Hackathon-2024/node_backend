@@ -53,7 +53,7 @@ const placeOrder = async (req, res) => {
         bnplStatus.length
       )
         res.status(400).json({ message: "Pay your current bnpl debt" });
-      prisma.bnpl.create({
+      await prisma.bnpl.create({
         data: {
           userId,
           orderId,
@@ -86,8 +86,12 @@ const updateOrderStatus = async (req, res) => {
         status: status.toUpperCase(),
       },
     });
+    res.status(200).json({ message: "order status updated succesfully" });
   } catch (err) {
     console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Error updating order status", error: err });
   }
 };
 
